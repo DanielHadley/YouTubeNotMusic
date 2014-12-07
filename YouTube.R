@@ -55,6 +55,46 @@ dR = data.frame(titlesR, upvotes)
 
 
 
+# Top Reddit Youtube
+# Data cut and pasted from here 12/6/2014:
+# https://www.youtube.com/playlist?list=PLirAqAtl_h2r5g8xGajEwdXd3x1sZh8hC
+# & here http://www.reddit.com/domain/youtu.be/top/
+# & here http://www.reddit.com/r/videos/top
+
+titlesRUpdated = c("Wayne County Serves Up Cat Food Like Meals","Preacher Phil Snider gives interesting gay rights speech",
+                   "Colburn Idiots Abroad: Day One", "Tech Demo for Pillow Castle's First Person Puzzler",
+            "Baby laughing while getting shots","A Conversation With My 12 Year Old Self",
+                   "Gravity Visualized",
+            "Does Megalodon still exist? Shark Week debunked", "My cousin Oskaar",
+            "How 2 Barbie", "Rick Astley - Never Gonna Give You Up",
+            "Two women caught stealing a canopy on the beach...",
+            "First taste of chocolate in Ivory Coast", "Animator vs. Animation IV (original)",
+            "How to fool a baboon", "The Faze Clansman", 
+                  "An awesome young man", "Imma Get You Bitch", "First-person Hyperlapse Videos",
+            "Bare-chested Russian man orders ducks to attention", "Billy Joel - Sings",
+            "Long Story Short - I Had a Movie Date", "Space Oddity", 
+            "Burn", "Road rage in Russia","Inglewood Police Chase Jan 13, 2013",  "MLG Mario",
+            "Volcano Eruption in Papua New Guinea", "Helicopter Fishing", 
+                   "Russians are scary (Dan Soder-Stand Up-01.07.13)")
+
+# , "Prescott Highside", 
+#                    "Whale watching from canoe",
+#             "Wimpy Goat", "Run Walter, RUN!!", "My Life Vs...GoPro", "Sir Ravi The Juggler",
+#             "Race The Tube - Sprint", "Honey Badger Houdini - Honey Badgers: Masters of Mayhem",
+#                    "I TOWED JOEY GRACEFFA'S CAR",
+#             "Crazy car vent", "Porsche 911 991 issues")
+
+upvotesUpdated=c(17371, 12634, 12458, 11404, 10947, 10523, 9896, 9804, 9796, 9459, 9242, 9189, 8862, 8537, 8451, 8356, 8269, 
+                 8256, 8232, 8217, 7964,
+          7875, 7828, 7695, 7672, 7653, 7609, 7493, 7474, 7408)
+
+#, 7365, 7352, 7343, 7334, 7255, 7199, 7167, 7014, 7095, 7042, 6780)
+
+dRFixed = data.frame(titlesRUpdated, upvotesUpdated)
+
+
+
+
 my.theme <- 
   theme(#plot.background = element_rect(fill="white"), # Remove background
     panel.grid.major = element_blank(), # Remove gridlines
@@ -77,6 +117,8 @@ ggplot(d, aes(x=reorder(d$titles, d$millionviews), y=d$millionviews)) + geom_bar
   scale_y_continuous(labels = comma)
 
 ggsave("./YouTube.png", dpi=300, width=7, height=6)
+ggsave("./YTTopNonMusic.png", dpi=300, width=7, height=6)
+
 
 
 ggplot(dR, aes(x=reorder(dR$titlesR, dR$upvotes), y=dR$upvotes)) + geom_bar(colour="white", fill="red") + 
@@ -87,3 +129,15 @@ ggplot(dR, aes(x=reorder(dR$titlesR, dR$upvotes), y=dR$upvotes)) + geom_bar(colo
   scale_y_continuous(labels = comma)
 
 ggsave("./YouTubeR.png", dpi=300, width=7, height=6)
+ggsave("./ReYTTop.png", dpi=300, width=7, height=6)
+
+
+
+ggplot(dR, aes(x=reorder(dRFixed$titlesR, dRFixed$upvotes), y=dRFixed$upvotes)) + geom_bar(colour="white", fill="red") + 
+  my.theme + ggtitle("Top 30 most-viewed YouTube videos on Reddit") + xlab(NULL) +
+  ylab("Upvotes as of December 2014") + 
+  geom_text(aes(label = upvotes), size = 2, color= "grey", hjust = -.25)+
+  coord_flip() +
+  scale_y_continuous(labels = comma)
+
+ggsave("./ReYTFixed.png", dpi=300, width=7, height=6)
